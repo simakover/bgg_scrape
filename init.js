@@ -15,9 +15,8 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     let text = yield response.text();
     const parser = new fast_xml_parser_1.XMLParser();
     const json = parser.parse(text);
-    console.log(`First book: `, json.items.item[0].name);
-    //   let xmlDoc = parser.parseFromString(text, 'text/xml');
-    //   const game = xmlDoc.getElementsByTagName('name ')[0];
-    //   console.log(game);
+    json.items.item.forEach((element) => {
+        console.log(element.name);
+    });
 });
 main();
