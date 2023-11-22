@@ -2,7 +2,7 @@
 
 import { XMLParser } from 'fast-xml-parser';
 
-const main = async () => {
+const getWishlist = async () => {
   let response = await fetch('https://boardgamegeek.com/xmlapi/collection/simakover?wishlistpriority=1');
   let text = await response.text();
 
@@ -14,4 +14,4 @@ const main = async () => {
   });
 };
 
-main();
+getWishlist();
