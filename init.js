@@ -10,13 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fast_xml_parser_1 = require("fast-xml-parser");
-const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    let response = yield fetch('https://boardgamegeek.com/xmlapi/collection/simakover?wishlistpriority=1');
+const getWishlist = () => __awaiter(void 0, void 0, void 0, function* () {
+    let response = yield fetch('https://boardgamegeek.com/xmlapi/collection/simakover?wishlistpriority=1&preordered=0');
     let text = yield response.text();
+    const wishArray = [];
     const parser = new fast_xml_parser_1.XMLParser();
     const json = parser.parse(text);
     json.items.item.forEach((element) => {
-        console.log(element.name);
+        wishArray.push(element.name);
     });
+    return wishArray;
+});
+const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    const wishGames = yield getWishlist();
+    console.log(wishGames);
 });
 main();
