@@ -8,8 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const fast_xml_parser_1 = require("fast-xml-parser");
+const fs_1 = __importDefault(require("fs"));
 const USER_URL = 'https://boardgamegeek.com/xmlapi/collection/simakover?wishlistpriority=1&preordered=0';
 const options = {
     attributeNamePrefix: 'attr_',
@@ -53,6 +57,11 @@ const getCyrNames = (arr) => __awaiter(void 0, void 0, void 0, function* () {
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const wishGames = yield getWishlist();
     const namesArray = yield getCyrNames(wishGames);
-    console.log(namesArray);
+    const jsonContent = JSON.stringify(namesArray, null, 2);
+    fs_1.default.writeFile('./data.json', jsonContent, 'utf8', (err) => {
+        if (err)
+            return console.log(err);
+    });
+    // console.log(namesArray);
 });
 main();

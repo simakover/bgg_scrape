@@ -1,6 +1,7 @@
 'use strict';
 
 import { XMLParser } from 'fast-xml-parser';
+import fs from 'fs';
 
 const USER_URL = 'https://boardgamegeek.com/xmlapi/collection/simakover?wishlistpriority=1&preordered=0';
 
@@ -56,7 +57,13 @@ const getCyrNames = async (arr: string[]) => {
 const main = async () => {
   const wishGames = await getWishlist();
   const namesArray = await getCyrNames(wishGames);
-  console.log(namesArray);
+
+  const jsonContent = JSON.stringify(namesArray, null, 2);
+  fs.writeFile('./data.json', jsonContent, 'utf8', (err: any) => {
+    if (err) return console.log(err);
+  });
+
+  // console.log(namesArray);
 };
 
 main();
